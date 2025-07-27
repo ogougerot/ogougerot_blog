@@ -4,11 +4,14 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'Cette email est déjà utilisé')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -16,7 +19,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: "L'email est obligatoire")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "L'email ne doit pas dépasser {{ limit }} caractères. ",
+    )]
+    #[Assert\Email(
+        message: "L'email est invalide",)]
     #[ORM\Column(length: 180)]
+
     private ?string $email = null;
 
     /**
@@ -25,12 +36,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
+        #[ORM\Column]
+    private bool $isVerified = false;
+
     /**
      * @var string The hashed password
      */
+    #[Assert\NotBlank(message: "Le mot de passe est obligatoire")]
+    #[Assert\Length(
+        min: 12,
+        max: 255,
+        minMessage: "Le mot de passe doit contenir au moins {{ limit }} caractères. ",
+        maxMessage: "Le mot de passe ne doit pas dépasser {{ limit }} caractères. ",
+    )]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[a-zà-ÿ])(?=.*[A-ZÀ-Ỳ])(?=.*[0-9])(?=.*[^a-zà-ÿA-ZÀ-Ỳ0-9]).{11,255}$/',
+        match: true,
+        message: 'Le mot de passe doit contentir au moins une lettre miniscule, majuscule, un chiffre et un caractère spécial.',
+    )]
     #[ORM\Column]
     private ?string $password = null;
-
+    
+    #[Assert\NotBlank(message: "Le nom d'utilisateur est obligatoire")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Le nom d'utilisateur ne doit pas dépasser {{ limit }} caractères. ",
+    )]
     #[ORM\Column(length: 255)]
     private ?string $userName = null;
 
@@ -42,6 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $udpatedAt = null;
+
 
     public function getId(): ?int
     {
@@ -168,6 +200,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUdpatedAt(?\DateTimeImmutable $udpatedAt): static
     {
         $this->udpatedAt = $udpatedAt;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

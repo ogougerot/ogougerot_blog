@@ -1,0 +1,13 @@
+<h1>Vérification du compte sur le blog</h1>
+
+<p>
+    Veuillez confirmer votre adresse email en cliquant sur le lien ci-dessous: <br><br>
+    <a href="{{ signedUrl|raw }}">Vérifier le compte</a>.
+</p>
+<p>
+    Ce lien expirera dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+    Merci et à bientôt sur mon blog !
+</p>
