@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Connexion</title>
+        <meta name="description" content="Inscrivez-vous pour commenter et aimer des articles interessants">
+
+        <meta name="robots" content="index, follow">
+        <meta name="author" content="ogougerot">
+        <meta name="publisher" content="DWWM">
+
+        {# Google font #}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+        {# Favicon #}
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body class="h-100">
+        <div class="container my-3">
+            <div class="row">
+                <div class="col-lg-6 text-center">
+                    {# Img #}
+                    <img src="/images/static/authentication/login.png" alt="Je vous invite à vous connecter" class="img-fluid">
+                </div>
+                <div class="col-lg-6 d-flex flex-column justify-content-center align-items-center">
+
+                    {# Title #}
+                    <div>
+                        <h1>Connexion</h1>
+                    </div>
+
+
+                    {# Form #}
+                    <form method="post" class="login-form">
+                        {% if error %}
+                            <div class="text-center alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        {% include 'components/alert.html.twig' %}
+
+                        <div class="mb-3">
+                            <label for="inputEmail">Email</label>
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputPassword">Mot de passe</label>
+                            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                        </div>
+                        
+                        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+                        <div class="mb-3 row">
+                            <div class="col-md-6 my-1">
+                                <label>
+                                    <input type="checkbox" name="_remember_me"> Se souvenir de moi
+                                </label>
+                            </div>
+                            <div class="col-md-6 text-md-end my-1">
+                                <a href="#">Mot de passe oublié?</a>
+                                {# <a href="{{path('app_forgot_password_request')}}">Mot de passe oublié?</a> #}
+                            </div>
+                        </div>
+
+                        <div>
+                            <button formnovalidate class="btn btn-lg btn-primary w-100" type="submit">Se connecter</button>
+                        </div>
+                    </form>
+
+                    {# Links #}
+                    <div class="text-center mt-3">
+                        <p>Vous n'avez pas encore de compte? <a href="{{path('app_register')}}">Inscrivez-vous</a></p>
+                        <p><a href="{{path('app_visitor_welcome')}}">Retour à l'accueil</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
