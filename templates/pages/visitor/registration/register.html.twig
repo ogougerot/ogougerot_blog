@@ -1,23 +1,142 @@
 <!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Inscription - ogougerot blog</title>
+        <meta name="description" content="Inscrivez-vous pour commenter et aimer des articles interessants">
 
-<title>Register</title>
+        <meta name="robots" content="index, follow">
+        <meta name="author" content="Jean Dupont">
+        <meta name="publisher" content="DWWM">
 
-{% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
+        {# Google font #}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+        {# Favicon #}
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body class="h-100">
+        <div class="container my-3">
+            <div class="row">
+                <div class="col-lg-6 text-center">
+                    {# Img #}
+                    <img src="/images/static/registration/registration.png" alt="Bonjour inscrivez vous pour ne rien manquer de l'actualité du blog" class="img-fluid">
+                </div>
+                <div class="col-lg-6 d-flex flex-column justify-content-center align-items-center">
+
+                    {# Title #}
+                    <div>
+                        <h1>Inscription</h1>
+                    </div>
+                                    
+                    {% for flash_error in app.flashes('verify_email_error') %}
+                        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                    {% endfor %}
+
+                    {# Form #}
+                    {{form_start(registrationForm)}}
+                        <div class="row">
+                            <div class="col-lg-12 mb-3">
+                                <label for="registration_form_firstName">Nom d'utilisateur <span class="text-danger">*</span></label>
+                                <div class="text-danger">{{form_errors(registrationForm.userName)}}</div>
+                                {{form_widget(registrationForm.userName, {'attr': {'class':'form-control', 'autofocus':'autofocus'}})}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="registration_form_email">Email <span class="text-danger">*</span></label>
+                                <div class="text-danger">{{form_errors(registrationForm.email)}}</div>
+                                {{form_widget(registrationForm.email, {'attr': {'class':'form-control'}})}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="registration_form_password_first">Mot de passe <span class="text-danger">*</span></label>
+                                <div class="text-danger">{{form_errors(registrationForm.password.first)}}</div>
+                                {{form_widget(registrationForm.password.first, {'attr': {'class':'form-control', 'placeholder':'Au moins 12 caractères'}})}}
+                                <div><small><em>Le mot de passe doit contenir au moins 12 caractères.</em></small></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="registration_form_password_second">Confirmation du mot de passe <span class="text-danger">*</span></label>
+                                <div class="text-danger">{{form_errors(registrationForm.password.second)}}</div>
+                                {{form_widget(registrationForm.password.second, {'attr': {'class':'form-control'}})}}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registration_form_agreeTerms">
+                                <div class="text-danger">{{form_errors(registrationForm.agreeTerms)}}</div>
+                                {{form_widget(registrationForm.agreeTerms)}} <span>Lire et accepter <a href="#" data-bs-toggle="modal" data-bs-target="#agreeTermsModal">les conditions générales d'utilisation</a></span>
+                            </label>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="agreeTermsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="agreeTermsModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Les conditions générales d'utilisation</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Qu'est-ce que le Lorem Ipsum? Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.
+                                            Pourquoi l'utiliser? On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).
+                                            Vous avez déjà un compte ? Connectez-vous
+                                            Retour à l'accueil
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <input formnovalidate type="submit" class="btn btn-primary w-100 shadow" value="S'inscrire">
+                        </div>
+                    {{form_end(registrationForm)}}
+
+                    {# Links #}
+                    {# <div class="text-center mt-3">
+                        <p>Vous avez déjà un compte? <a href="{{path('app_login')}}">Connectez-vous</a></p>
+                        <p><a href="{{path('app_visitor_welcome')}}">Retour à l'accueil</a></p>
+                    </div> #}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {# {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-
-    <h1>Register</h1>
-
-    {{ form_errors(registrationForm) }}
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.password, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button formnovalidate type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
-{% endblock %}
+    {% endfor %} #}
