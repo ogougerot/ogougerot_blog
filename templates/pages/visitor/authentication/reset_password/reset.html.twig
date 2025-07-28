@@ -1,0 +1,33 @@
+{% extends 'themes/base_visitor.html.twig' %}
+
+{% block title %}Nouveau mot de passe{% endblock %}
+
+{% block description %}Réinitialisez votre mot de passe{% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-3 display-5">Nouveau mot de passe</h1>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4 mx-auto shadow p-4">
+                {{ form_start(resetForm) }}
+                    <div class="mb-3">
+                        <label for="change_password_form_plainPassword_first">Nouveau mot de passe</label>
+                        <div class="text-danger">{{form_errors(resetForm.plainPassword.first)}}</div>
+                        {{ form_widget(resetForm.plainPassword.first, {'attr': {'class':'form-control', 'autofocus':'autofocus', 'placeholder':'Au moins 12 caractères'}}) }}
+                        <div><small><em>Le mot de passe doit contenir au moins 12 caractères.</em></small></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="change_password_form_plainPassword_second">Confirmation du nouveau mot de passe</label>
+                        <div class="text-danger">{{form_errors(resetForm.plainPassword.second)}}</div>
+                        {{ form_widget(resetForm.plainPassword.second, {'attr': {'class':'form-control'}}) }}
+                    </div>
+                    <div>
+                        <button formnovalidate class="btn btn-primary w-100 shadow">Envoyer</button>
+                    </div>
+                {{ form_end(resetForm) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
