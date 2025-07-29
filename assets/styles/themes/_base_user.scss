@@ -1,0 +1,9 @@
+html,
+.body-user {
+    height: 100%;
+}
+
+.body-user {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
