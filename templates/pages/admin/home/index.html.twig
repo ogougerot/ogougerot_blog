@@ -1,0 +1,93 @@
+{% extends "themes/base_admin.html.twig" %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block description %}Tableau de bord{% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-3 display-5">{{app.user.userName}}</h1>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card text-bg-light mb-3">
+                    <div class="card-header">
+                        {# <a class="text-decoration-none text-dark" href="{{path('app_admin_category_index')}}">Les catégories</a> #}
+                        <a class="text-decoration-none text-dark" href="#">Les catégories</a>
+                    </div>
+                    <div class="card-body">
+                        {# <p class="card-title">{{categories_count}}</p> #}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-bg-light mb-3">
+                    <div class="card-header">
+                        <a class="text-decoration-none text-dark" href="#">Les articles</a>
+                        {# <a class="text-decoration-none text-dark" href="{{path('app_admin_post_index')}}">Les articles</a> #}
+                    </div>
+                    <div class="card-body">
+                        {# <p class="card-title">{{posts_count}}</p> #}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-bg-light mb-3">
+                    <div class="card-header">
+                        <a class="text-decoration-none text-dark" href="#">Les tags</a>
+                        {# <a class="text-decoration-none text-dark" href="{{path('app_admin_tag_index')}}">Les tags</a> #}
+                    </div>
+                    <div class="card-body">
+                        {# <p class="card-title">{{tags_count}}</p> #}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-bg-light mb-3">
+                    <div class="card-header">
+                        <a class="text-decoration-none text-dark" href="#">Les commentaires</a>
+                        {# <a class="text-decoration-none text-dark" href="{{path('app_admin_comment_index')}}">Les commentaires</a> #}
+                    </div>
+                    <div class="card-body">
+                        {# <p class="card-title">{{comments_count}}</p> #}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card text-bg-light mb-3">
+                    <div class="card-header">
+                        <a class="text-decoration-none text-dark" href="#">Les utilisateurs</a>
+                        {# <a class="text-decoration-none text-dark" href="{{path('app_admin_user_index')}}">Les utilisateurs</a> #}
+                    </div>
+                    <div class="card-body">
+                        {# <p class="card-title">{{users_count}}</p> #}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-bg-light mb-3">
+                    <div class="card-header">
+                        <a class="text-decoration-none text-dark" href="#">Les contacts</a>
+                        {# <a class="text-decoration-none text-dark" href="{{path('app_admin_contact_index')}}">Les contacts</a> #}
+                    </div>
+                    <div class="card-body">
+                        {# <p class="card-title">{{contacts_count}}</p> #}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-bg-light mb-3">
+                    <div class="card-header">
+                        <a class="text-decoration-none text-dark" href="#">Les likes</a>
+                    </div>
+                    <div class="card-body">
+                        {# <p class="card-title">{{likes_count}}</p> #}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
