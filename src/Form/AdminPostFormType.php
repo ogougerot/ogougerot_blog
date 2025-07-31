@@ -25,7 +25,7 @@ class AdminPostFormType extends AbstractType
                 'placeholder' => 'Selectionnez une catégorie',
             ])
             ->add('tags', EntityType::class, [
-                // 'class' => Tag::class,
+                'class' => Tag::class,
                 'choice_label' => 'name',
                 'expanded' => false,
                 'multiple' => true,
