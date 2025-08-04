@@ -1,0 +1,40 @@
+{% extends "themes/base_admin.html.twig" %}
+
+{% block title %}Modifier les rôles{% endblock %}
+
+{% block description %}Modifier les rôles{% endblock %}
+
+{% block jQuery %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block select2 %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#edit_roles_form_roles').select2();
+    });
+</script>
+{% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-3 display-5">Modifier les rôles</h1>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                {{form_start(form)}}
+                    <div class="mb-3">
+                        <label for="edit_roles_form_roles">Les rôles</label>
+                        <div class="text-danger">{{form_errors(form.roles)}}</div>
+                        {{form_widget(form.roles, {'attr': {'class':'form-control', 'autofocus':'autofocus'}})}}
+                    </div>
+                    <div>
+                        <input formnovalidate type="submit" class="btn btn-primary">
+                    </div>
+                {{form_end(form)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}
