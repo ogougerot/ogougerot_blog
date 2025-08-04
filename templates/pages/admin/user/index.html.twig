@@ -1,0 +1,82 @@
+{% extends "themes/base_admin.html.twig" %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block description %}Liste des utilisateurs{% endblock %}
+
+{% block jQuery %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block dataTables %}
+<link href="https://cdn.datatables.net/v/bs5/dt-2.3.1/datatables.min.css" rel="stylesheet" integrity="sha384-rcK/Hw0a8czqNV8XiNNbA2kqXBypz/reTTu9ewJiCYQRES16Xpl47dKudYItkU7M" crossorigin="anonymous">
+ 
+<script src="https://cdn.datatables.net/v/bs5/dt-2.3.1/datatables.min.js" integrity="sha384-BE8jgQ18lLIDRFU5irQ26MTXl+tzWCKvu313il+U+Wo2wVTDr47xBIDmggcM21dh" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/2.3.1/i18n/fr-FR.json',
+            }
+        });
+    } );
+</script>
+{% endblock %}
+
+
+{% block main %}
+    <h1 class="text-center my-3 display-5">Liste des utilisateurs</h1>
+
+    {% include 'components/alert.html.twig' %}
+
+    <div class="table-responsive">
+        <table id="myTable" class="table table-striped table-hover table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Statut</th>
+                    <th>Rôles</th>
+                    <th>Créé le</th>
+                    <th>Modifié le</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{user.id}}</td>
+                        <td>{{user.userName}}</td>
+                        <td>{{user.email}}</td>
+                        <td>
+                            {% if user.isVerified %}
+                                <span>Compte vérifié le {{user.verifiedAt|date()}}</span>
+                            {% else %}
+                                <span>Compte non vérifié</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% for role in user.roles %}
+                                <span class="badge text-bg-secondary m-1">{{role}}</span>
+                            {% endfor %}
+                        </td>
+                        <td>{{user.createdAt|date()}}</td>
+                        <td>{{user.updatedAt|date()}}</td>
+                        <td>
+                            {% if 'ROLE_SUPER_ADMIN' not in user.roles %}
+                                <a href="{{path('app_admin_user_edit_roles', {'id':user.id})}}" class="m-1 btn btn-sm btn-secondary">Modifier</a>
+                                <form class="-1 d-inline" action="{{path('app_admin_user_delete', {'id':user.id})}}" method="post">
+                                    <input type="hidden" name="csrf_token" value="{{csrf_token('delete-user-'~user.id)}}">
+                                    <input type="submit" class="btn btn-sm btn-danger" value="Supprimer" onclick="return confirm('Confirmer la suppression?')">
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

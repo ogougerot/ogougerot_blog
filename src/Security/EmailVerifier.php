@@ -48,7 +48,7 @@ class EmailVerifier
 
         $user->setIsVerified(true);
         $user->setVerifiedAt(new DateTimeImmutable());
-        $user->setUdpatedAt(new DateTimeImmutable());
+        $user->setUpdatedAt(new DateTimeImmutable());
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
