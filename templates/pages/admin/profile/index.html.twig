@@ -1,0 +1,28 @@
+{% extends "themes/base_admin.html.twig" %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block description %}Mon profil{% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-3 display-5">Mon profil</h1>
+
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 col-lg-6 mx-auto shadow p-4">
+
+                {% include 'components/alert.html.twig' %}
+
+                <div>
+                    <p><strong>Nom</strong>: {{app.user.userName}}</p>
+                    <p><strong>Email</strong>: {{app.user.email}}</p>
+                    <div>
+                        <a href="{{path('app_admin_profile_edit_profile')}}" class="m-2 btn btn-sm btn-secondary">Modifier mon profil</a>
+                        <a href="{{path('app_admin_profile_edit_password')}}" class="m-2 btn btn-sm btn-dark">Modifier mon mot de passe</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

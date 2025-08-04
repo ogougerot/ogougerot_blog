@@ -152,7 +152,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(?string $password): static
     {
         $this->password = $password;
 
@@ -181,7 +181,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->userName;
     }
 
-    public function setUserName(string $userName): static
+    public function setUserName(?string $userName): static
     {
         $this->userName = $userName;
 

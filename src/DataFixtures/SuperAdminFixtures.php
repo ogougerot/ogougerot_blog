@@ -41,7 +41,7 @@ class SuperAdminFixtures extends Fixture
         $superAdmin->setPassword($passwordHashed);
         $superAdmin->setCreatedAt(new DateTimeImmutable());
         $superAdmin->setVerifiedAt(new DateTimeImmutable());
-        $superAdmin->setUdpatedAt(new DateTimeImmutable());
+        $superAdmin->setUpdatedAt(new DateTimeImmutable());
 
         return $superAdmin;
     }
