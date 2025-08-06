@@ -16,6 +16,26 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
+    /**
+     * Cette méthode filtre les posts en fonction du tag précisé.
+     *
+     * @return array<int, Post>
+     */
+    public function filterPostsByTag(int $tag_id): array
+    {
+        return $this->createQueryBuilder('p')
+                    ->join('p.tags', 't')
+                    ->select('p')
+                    ->where('t.id = :id')
+                    ->andWhere('p.isPublished = :val')
+                    ->setParameter('id', $tag_id)
+                    ->setParameter('val', true)
+                    ->orderBy('p.publishedAt', 'DESC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+
     //    /**
     //     * @return Post[] Returns an array of Post objects
     //     */
