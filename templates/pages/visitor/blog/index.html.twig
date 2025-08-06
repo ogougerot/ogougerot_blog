@@ -2,8 +2,99 @@
 
 {% block title %}Liste des articles{% endblock %}
 
-{% block description %}Suivez les articles du blog{% endblock %}
+{% block description %}Lisez des articles pertinents sur Screen|Verse{% endblock %}
 
-{% block main %}   
-    <h1 class="text-center my-3 display-5">Liste des articles</h1>
+{% block knp_paginator_rel_links %}
+    {# rel links for pagination #}
+    {{ knp_pagination_rel_links(posts) }}
+{% endblock %}
+
+{% block main %}
+    {% include 'components/visitor/header-visitor.html.twig' with {'h1': 'Liste des articles'} %}
+
+    <div class="container mt-5">
+        <div class="row text-center gap-3 gap-md-0">
+            <div class="col-md-6">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Les catégories
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% if categories is not empty %}
+                            {% for category in categories %}
+                            {% set tagPostsLength = category.posts|length %}
+                                <li><a class="dropdown-item" href="{{path('app_visitor_blog_filter_by_category', {'id':category.id, 'slug': category.slug})}}">{{category.name}} ({{tagPostsLength}} article{{tagPostsLength > 1 ? 's': ''}})</a></li>
+                            {% endfor %}
+                        {% else %}
+                            <li><a class="dropdown-item" href="#">Aucune catégorie disponible</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Les tags
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% if tags is not empty %}
+                            {% for tag in tags %}
+                            {% set tagPostsLength = tag.posts|length %}
+                                <li><a class="dropdown-item" href="{{path('app_visitor_blog_filter_by_tag', {'id':tag.id, 'slug': tag.slug})}}">{{tag.name}} ({{tagPostsLength}} article{{tagPostsLength > 1 ? 's': ''}})</a></li>
+                            {% endfor %}
+                        {% else %}
+                            <li><a class="dropdown-item" href="#">Aucun tag disponible</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-5">
+            <div class="col-md-10 col-lg-10 mx-auto">
+                {% for post in posts %}
+                    <article class="card mb-3 shadow">
+                        <div class="row g-0">
+                            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                {% if post.image %}
+                                    <img src="{{vich_uploader_asset(post, 'imageFile')}}" class="rounded-start w-100 h-100" alt="{{post.title}}">
+                                    {# <img src="{{vich_uploader_asset(post, 'imageFile') | imagine_filter('visitor_post_thumb') }}" class="rounded-start w-100 h-100" alt="{{post.title}}"> #}
+                                {% else %}
+                                    <img src="/images/static/blog/default_post_image.png" class="img-fluid rounded-start" alt="{{post.title}}">
+                                {% endif %}
+                                
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h2 class="card-title">{{post.title|u.truncate('60', '...')}}</h2>
+                                    <p class="card-text">{{post.description|u.truncate('80', '...')}}</p>
+                                    <p><strong>Catégorie: </strong>{{post.category.name}}</p>
+                                    {% if post.tags is not empty %}
+                                    <p>
+                                        <strong>Tags: </strong>
+                                        {% for tag in post.tags %}
+                                            <span class="mx-1 badge text-bg-secondary">{{tag.name}}</span>
+                                        {% endfor %}
+                                    </p>
+                                    {% endif %}
+                                    
+                                    <p class="card-text"><small class="text-body-secondary">Publié {{post.publishedAt|ago}}</small></p>
+                                    <p>
+                                        {# <a href="{{path('app_visitor_blog_post_show', {'id':post.id, 'slug':post.slug})}}" class="btn btn-lg btn-primary shadow">Lire l'article</a> #}
+                                        <a href="#" class="btn btn-lg btn-primary shadow">Lire l'article</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <hr class="my-3">
+                {% endfor %}
+
+                {# display navigation #}
+                <div class="d-flex justify-content-end align-items-center">
+                    {# {{ knp_pagination_render(posts) }} #}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

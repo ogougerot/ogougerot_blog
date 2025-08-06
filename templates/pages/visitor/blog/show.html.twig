@@ -1,0 +1,135 @@
+{% extends "themes/base_visitor.html.twig" %}
+
+{% block title %}Article num:{{post.id}}: {{post.title}}{% endblock %}
+
+{% block description %}{{post.description}}{% endblock %}
+
+{# Font Awesome #}
+{% block fontAwesome %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block main %}
+    <div class="container mt-5">
+        <div class="jd-container-img text-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{path('app_visitor_blog_index')}}">Liste des articles</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{post.title|u.truncate('60', '...')}}</li>
+                </ol>
+            </nav>
+
+            <div>
+                {% if post.image %}
+                    <img class="img-fluid" src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.title }}">
+                {% endif %}
+            </div>
+
+            <div>
+                <h1>{{post.title}}</h1>
+                <small>Publié il y a {{post.publishedAt|ago}} par <strong>Jean Dupont</strong></small>
+            </div>
+        </div>
+
+        <div class="jd-container-post my-5">
+            {{post.content|nl2br}}
+
+            <div class="my-4">
+                <a id="like-link" href="{{path('app_visitor_blog_post_like', {'id':post.id, 'slug':post.slug})}}">
+                    {% if app.user and post.isLikedBy(app.user) %}
+                        <i class="fa-solid fa-thumbs-up"></i> {# Pouce liké #}
+                    {% else %}
+                        <i class="fa-regular fa-thumbs-up"></i> {# Pouce non liké #}
+                    {% endif %}
+                </a>
+                <span id="total-likes-container">{{post.likes|length}}</span>
+                <span>J'aime</span>
+            </div>
+
+            {% if app.user %}
+                {# Form #}
+                <div class="my-5">
+                    {{form_start(form, {'action': path('app_visitor_blog_post_show', {'id':post.id, 'slug':post.slug})~'#comments-container'})}}
+                        <div class="mb-3">
+                            <label for="comment_form_content">Laisser votre commentaire</label>
+                            <div class="text-danger">{{form_errors(form.content)}}</div>
+                            {{form_widget(form.content, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div>
+                            <input type="submit" class="btn btn-primary shadow">
+                        </div>
+                    {{form_end(form)}}
+                </div>
+            {% else %}
+                <p class="text-center my-5">
+                    Connectez-vous pour donner votre avis:
+                    <a href="{{path('app_login')}}" class="btn btn-secondary">Me connecter</a>
+                </p>
+            {% endif %}
+
+            {% if post.comments|length > 0 %}
+                <div id="comments-container" class="my-5">
+                    {% for comment in post.comments|reverse %}
+                        {% if comment.isActivated %}
+                            <div class="shadow p-2">
+                                {% if comment.user %}
+                                    <p><strong>{{comment.user.firstName}} {{comment.user.lastName}}</strong> <small class="">{{comment.activatedAt ? '(Envoyé ' ~ comment.activatedAt|ago ~ ')' : ''}}</small></p>
+                                {% else %}
+                                    <p><strong>Utilisateur inconnu</strong> <small class="">{{comment.activatedAt ? '(Envoyé ' ~ comment.activatedAt|ago ~ ')' : ''}}</small></p>
+                                {% endif %}
+                                    <p>{{comment.content|nl2br}}</p>
+                            </div>
+                        {% endif %}
+                        <hr class="my-3">   
+                    {% endfor %}
+                </div>
+            {% endif %}  
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block j_query %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block specific_js %}
+<script>
+    $(document).ready(function(){
+        $('#like-link').on('click', function(event){
+            event.preventDefault();
+
+            $.ajax({
+                url: this.href,
+                type: 'GET',
+                success: function (response) {
+                    // console.log(response);
+                    $("#total-likes-container").html(response.totalLikesUpdated);
+
+                    if ( $('i').hasClass('fa-regular') ) 
+                    {
+                        $('i').removeClass('fa-regular');
+                        $('i').addClass('fa-solid');
+                    }
+                    else
+                    {
+                        $('i').removeClass('fa-solid');
+                        $('i').addClass('fa-regular');
+                    }
+                },
+                error: function (response) {
+                    // console.log(response);
+                    if ( response.status == 403 ) 
+                    {
+                        alert(response.responseJSON.message);
+                    }
+                    else
+                    {
+                        alert("Une erreur est survenue, veuillez réessayer");
+                    }
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
