@@ -2,8 +2,95 @@
 
 {% block title %}Accueil{% endblock %}
 
-{% block description %}Suivez l'acualité des sorties de cette été{% endblock %}
+{% block description %}Bienvenue sur mon Blog{% endblock %}
 
-{% block main %}   
-    <h1 class="text-center my-3 display-5">Hello</h1>
+{% block main %}
+
+    {# Hero-section #}
+    <header class="py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 order-md-2 d-flex jsutify-content-center align-items-center">
+                    <img src="/images/static/welcome/hero.png" class="img-fluid" alt="Bienvenue sur Screen|Verse">
+                </div>
+                <div class="col-md-7 order-md-1 d-flex flex-column justify-content-evenly align-items-center">
+                    <h1 class="display-5 my-5">Bienvenue sur <strong>Screen|Verse</strong> !</h1>
+                    <div>
+                        <p>Bienvenue dans l'univers Screen|Verse, où chaque film, série et anime trouve sa place ! Explorez notre sélection exclusive de critiques, découvertes et coups de cœur pour transformer vos soirées en véritables expériences de divertissement.</p>
+                    </div>
+                    <div class="mt-4">
+                        <a href="{{path('app_visitor_blog_index')}}" class="btn btn-lg btn-primary shadow">Liste des articles</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </header>
+
+    {# Actualités section #}
+    <section class="bg-light py-3">
+        <h2 class="text-center my-3 display-5">Actualités</h2>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 d-flex justify-content-center align-items-center">
+                    <img src="/images/static/welcome/news.png" class="img-fluid" alt="Actualités de Screen|Verse">
+                </div>
+                <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+                    <p>
+                        Découvrez nos critiques exclusives des dernières sorties cinéma, où chaque film est analysé avec passion et expertise pour vous guider dans vos choix de divertissement.
+                    </p>
+
+                    <p>
+                        Plongez dans nos analyses approfondies des séries qui marquent leur époque, explorant les univers narratifs complexes et les personnages qui captivent des millions de spectateurs.
+                    </p>
+
+                    <p>
+                        Explorez notre sélection d'animes incontournables du moment, des shonen épiques aux seinen sophistiqués, en passant par les pépites indépendantes qui redéfinissent le genre.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Last-posts section #}
+    <section class="py-3">
+        <h2 class="text-center my-3 display-5">Les derniers articles</h2>
+
+        <div class="container">
+            <div class="row">
+                {% for post in posts %}
+                    <div class="col-md-4">
+                        <div class="card mb-3 shadow" style="border: 2px solid #6c5ce7;">
+                            <h3 class="card-header text-white" style="background-color: #6c5ce7;">
+                                {{post.title}}
+                            </h3>
+                            <div class="card-body">
+                                <p><strong>Catégorie</strong>: {{post.category.name}}</p>
+                                {% if post.tags is not empty %}
+                                    <p> <strong>Tags</strong>: 
+                                        {% for tag in post.tags %}
+                                            <span class="mx-1 badge text-bg-secondary">{{tag.name}}</span>
+                                        {% endfor %}
+                                    </p>
+                                {% endif %}
+                                <p>
+                                    Publié {{post.publishedAt|ago}}
+                                </p>
+                                <p>
+                                    <a href="" class="btn text-white" style="background-color: #6c5ce7; border-color: #6c5ce7;">Lire l'article</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {# Community-section #}
+    <div class="py-3 text-center bg-light">
+        <a href="{{path('app_visitor_community_create')}}" class="my-3 btn btn-lg btn-primary shadow">Rejoignez la communauté</a>
+    </div>
+
 {% endblock %}
