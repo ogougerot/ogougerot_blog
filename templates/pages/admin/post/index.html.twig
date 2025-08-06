@@ -54,7 +54,8 @@
                         <td>{{post.id}}</td>
                         <td>
                             {% if post.image %}
-                            <img src="{{ vich_uploader_asset(post, 'imageFile') | imagine_filter('admin_post_thumb') }}" alt="{{ post.title }}">
+                            <img src="{{vich_uploader_asset(post, 'imageFile')}}" class="rounded-start w-100 h-100" alt="{{ post.title }}">
+                            {# <img src="{{ vich_uploader_asset(post, 'imageFile') | imagine_filter('admin_post_thumb') }}" alt="{{ post.title }}"> #}
                             {% else %}
                             <span>---</span>
                             {% endif %}
