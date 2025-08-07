@@ -1,0 +1,23 @@
+.jd-container-img {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media screen and (min-width: 768px) {
+        & {
+            width: 60%;
+        }
+    }
+}
+
+.jd-container-post {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media screen and (min-width: 768px) {
+        & {
+            width: 50%;
+        }
+    }
+}
