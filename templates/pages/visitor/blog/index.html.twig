@@ -80,8 +80,8 @@
                                     
                                     <p class="card-text"><small class="text-body-secondary">Publié {{post.publishedAt|ago}}</small></p>
                                     <p>
-                                        {# <a href="{{path('app_visitor_blog_post_show', {'id':post.id, 'slug':post.slug})}}" class="btn btn-lg btn-primary shadow">Lire l'article</a> #}
-                                        <a href="#" class="btn btn-lg btn-primary shadow">Lire l'article</a>
+                                        <a href="{{path('app_visitor_blog_post_show', {'id':post.id, 'slug':post.slug})}}" class="btn btn-lg btn-primary shadow">Lire l'article</a>
+                                        {# <a href="#" class="btn btn-lg btn-primary shadow">Lire l'article</a> #}
                                     </p>
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
 
                 {# display navigation #}
                 <div class="d-flex justify-content-end align-items-center">
-                    {# {{ knp_pagination_render(posts) }} #}
+                    {{ knp_pagination_render(posts) }}
                 </div>
             </div>
         </div>

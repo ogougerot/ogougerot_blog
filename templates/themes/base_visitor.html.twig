@@ -23,6 +23,9 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
 
+
+        {% block fontAwesome %}{% endblock %}
+
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -30,6 +33,13 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+
+        {% block j_query %}{% endblock %}
+
+        {% block specific_js %}{% endblock %}
+
+        {% block knp_paginator_rel_links %}{% endblock %}
+        
     </head>
     <body class="body-visitor">
         {# NavBar #}
