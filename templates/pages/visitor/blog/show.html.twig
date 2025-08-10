@@ -27,7 +27,7 @@
 
             <div>
                 <h1>{{post.title}}</h1>
-                <small>Publié il y a {{post.publishedAt|ago}} par <strong>Jean Dupont</strong></small>
+                <small>Publié il y a {{post.publishedAt|ago}} par <strong>ogougerot</strong></small>
             </div>
         </div>
 
@@ -73,7 +73,7 @@
                         {% if comment.isActivated %}
                             <div class="shadow p-2">
                                 {% if comment.user %}
-                                    <p><strong>{{comment.user.firstName}} {{comment.user.lastName}}</strong> <small class="">{{comment.activatedAt ? '(Envoyé ' ~ comment.activatedAt|ago ~ ')' : ''}}</small></p>
+                                    <p><strong>{{comment.user.userName}}</strong> <small class="">{{comment.activatedAt ? '(Envoyé ' ~ comment.activatedAt|ago ~ ')' : ''}}</small></p>
                                 {% else %}
                                     <p><strong>Utilisateur inconnu</strong> <small class="">{{comment.activatedAt ? '(Envoyé ' ~ comment.activatedAt|ago ~ ')' : ''}}</small></p>
                                 {% endif %}
