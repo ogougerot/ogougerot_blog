@@ -58,7 +58,7 @@ final class UserController extends AbstractController
             $userName = "{$user->getUserName()}";
 
             $userPosts = $user->getPosts();
-            // $userComments = $user->getComments();
+            $userComments = $user->getComments();
 
             if (count($userPosts) > 0) {
                 foreach ($userPosts as $post) {
@@ -66,11 +66,11 @@ final class UserController extends AbstractController
                 }
             }
 
-            // if (count($userComments) > 0) {
-            //     foreach ($userComments as $comment) {
-            //         $comment->setUser(null);
-            //     }
-            // }
+            if (count($userComments) > 0) {
+                foreach ($userComments as $comment) {
+                    $comment->setUser(null);
+                }
+            }
 
             if ($this->getUser() == $user) {
                 $this->container->get('security.token_storage')->setToken(null);

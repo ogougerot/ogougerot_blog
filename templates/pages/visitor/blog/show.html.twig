@@ -75,7 +75,7 @@
                                 {% if comment.user %}
                                     <p><strong>{{comment.user.userName}}</strong> <small class="">{{comment.activatedAt ? '(Envoyé ' ~ comment.activatedAt|ago ~ ')' : ''}}</small></p>
                                 {% else %}
-                                    <p><strong>Utilisateur inconnu</strong> <small class="">{{comment.activatedAt ? '(Envoyé ' ~ comment.activatedAt|ago ~ ')' : ''}}</small></p>
+                                    <p><strong>Utilisateur supprimé</strong> <small class="">{{comment.activatedAt ? '(Envoyé ' ~ comment.activatedAt|ago ~ ')' : ''}}</small></p>
                                 {% endif %}
                                     <p>{{comment.content|nl2br}}</p>
                             </div>
